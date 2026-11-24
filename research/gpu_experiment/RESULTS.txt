@@ -1,0 +1,76 @@
+GPU throughput results for learned edit rule speculation
+
+**The GPU prototype measured 55.1% higher single-stream throughput than indexed n-gram lookup on eight constructed code-editing tasks.** Qwen2.5-Coder-7B-Instruct ran in BF16 on one NVIDIA A100 80 GB PCIe GPU; the CPU learned and applied the edit rules. All 160 timed requests matched their ordinary-decoding reference token IDs.
+
+This result supports the mechanism on a restricted workload. It does not establish a throughput gain over vLLM, a gain under continuous batching, or publication readiness. The source functions contain repeated calls with unique assignment names, which make source/output alignment straightforward.
+
+# Measured throughput
+
+Five repetitions of eight tasks and four methods produced 160 timed requests. Each method generated 9,015 tokens in total, including EOS and excluding the supplied function-header prefix. Pooled throughput is total generated tokens divided by total timed request duration.
+
+| Method | Tokens per second | Total timed seconds |
+| --- | ---: | ---: |
+| Ordinary greedy decoding | 41.05 | 219.594 |
+| Indexed n-gram lookup | 132.52 | 68.028 |
+| One-example rewriting heuristic | 153.24 | 58.830 |
+| Learned edit rules | 205.55 | 43.859 |
+
+The learned-rule method was 1.55 times as fast as n-gram lookup, 1.34 times as fast as the simple heuristic, and 5.01 times as fast as ordinary decoding in the pooled measurements. These comparisons include all eight tasks and all five repetitions, without filtering cases by speed or edit quality.
+
+# Where it helped and where it lost
+
+| Constructed case | N-gram tokens per second | Heuristic tokens per second | Rules tokens per second | Rules gain over n-gram |
+| --- | ---: | ---: | ---: | ---: |
+| migrate8 | 130.7 | 199.8 | 194.1 | 48.5% |
+| migrate16 | 128.6 | 210.4 | 206.1 | 60.2% |
+| reorder8 | 98.4 | 97.6 | 173.9 | 76.7% |
+| reorder16 | 97.1 | 96.2 | 213.3 | 119.8% |
+| unchanged8 | 271.3 | 269.1 | 268.8 | -0.9% |
+| unchanged16 | 286.3 | 284.5 | 281.4 | -1.7% |
+| one_edit8 | 214.8 | 211.5 | 212.4 | -1.1% |
+| mixed12 | 116.8 | 172.0 | 156.5 | 34.0% |
+
+The per-case figures use median request times and rates over five repetitions. The learned rules helped most with repeated argument reordering. The simple heuristic was faster on the plain migration cases and the interleaved migration case. Unchanged-code and one-edit controls were about 1–2% slower with learned rules than with n-gram lookup.
+
+The important distinction is between a transformation that merely changes a callee and constant keywords, which the heuristic can learn from one example, and one that moves argument values between positions. Joint source/target placeholders let the rule learner represent the latter after two completed observations.
+
+# What actually ran
+
+The CPU first indexed the full prompt for ordinary exact lookup. For the learned method, it paired source assignments with completed target-generated assignments having the same unique variable name. Two observed edits within the same original call family supplied a symbolic before/after pattern. The CPU applied that pattern to the known source, indexed the resulting text, and proposed up to eight target tokens at a time. Every proposal went through the same GPU greedy verifier and KV-cache rollback code.
+
+On the first migration cases, the first learned rule became available after 38 generated tokens; on the argument-reordering cases it became available after 52. The measured target decode/verify calls fell from 2,375 with n-gram lookup to 1,475 with learned rules across the 40 requests per method. Rule learning was performed anew for every request.
+
+The simple heuristic control observes one completed edit and copies its new callee and literal keyword arguments to later calls while retaining their original positional arguments. It supports keyword insertion, replacement and deletion. This stronger version was fixed before the full timed experiment; the earlier smoke-test heuristic only supported appending keywords. Their source snapshots are retained separately.
+
+# Timing and hardware
+
+The target checkpoint was Qwen/Qwen2.5-Coder-7B-Instruct, revision `c03e6d358207e414f1eca0bb1891e29f1db0e242`, with 7,615,616,512 parameters. The runtime was PyTorch 2.11.0+cu130, Transformers 4.57.1, BF16 and scaled dot-product attention. Tensor parallelism, batching and concurrent requests were not used. The host was an Intel Xeon Silver 4210R with one PyTorch CPU thread. GPU driver: 580.159.03.
+
+Timing includes initial tokenization, index construction, GPU prefill, CPU rule induction, CPU drafting, GPU verification, synchronization and cache rollback. It excludes model loading, warmup, network traffic and request queues. Method/case/repetition order was randomized with seed 42. All proposers used a maximum eight-token draft; n-gram matching searched lengths two through eight.
+
+The exact baseline uses a maintained hash index rather than the earlier Python full-context scan. It searches the full model prompt plus committed output, selects the longest available n-gram match, and breaks ties by earliest occurrence. It is still a custom implementation, rather than vLLM’s compiled CPU or GPU proposer.
+
+# Correctness and model edit quality
+
+The audit checked all 160 distinct case/method/repetition records, all final token IDs, 32 first-repetition execution traces comprising 2,974 verification steps, timing arithmetic and source snapshot hashes. Two independent Transformers.generate calls also matched the custom ordinary-decoding loop. Six CPU proposer tests passed, including partial-statement exclusion, argument reordering, contradictory observations and the simple heuristic control.
+
+All methods preserved the same model output on these requests. Separately, five of eight ordinary model outputs matched the requested AST edits when constant keyword-argument ordering was ignored. In the migration cases, the model omitted existing retries arguments. In the interleaved case, it added both new keywords to both APIs. Those failures remain in the primary results and were accelerated identically; throughput improvement is not an improvement in editing accuracy.
+
+As a secondary diagnostic, the five structurally conforming cases yielded 138.05 tokens/s for n-gram lookup and 221.97 tokens/s for learned rules. This subset is not the primary result and does not establish correctness of executing the generated programs.
+
+# Uncertainty and research limits
+
+A descriptive bootstrap over the eight constructed tasks gave a 95% interval of 1.21–1.85 times for the paired-median speedup over n-gram lookup. Against the heuristic, the corresponding interval was 0.96–1.77 times and included no gain. These are sensitivity summaries for this tiny constructed workload, not confidence bounds for real-world code editing.
+
+The experiment uses known source assignment identifiers and straight-line Python functions. It does not solve general alignment, nested scopes, arbitrary formatting, real repository edits, stochastic verification or high-concurrency serving. The small 0.5B smoke test is retained but not pooled with the main measurements. It had additional instruction-following failures.
+
+The next decisive test is a project-disjoint real code-edit workload with a pinned vLLM runtime, comparing compiled n-gram and suffix methods and the simple rewriting heuristic under matched batching and CPU budgets. The current evidence justifies that experiment; it does not establish novelty or a general advantage.
+
+# Reproducibility
+
+Raw results, source snapshots, protocols, model revisions, independent generation checks, summaries, edit-quality audits and verification-trace audits are preserved in the experiment package. Model weights are excluded from the downloadable archive. The implementation and command examples are in its README.
+
+Related proposal: [Speculative decoding by learning repeated edits](https://chatgpt.com/space/page_7624a31fcec08191be2fdcf65be9e35c).
+
+Saved Page: https://chatgpt.com/space/page_385e3d0c62fc8191898e7b6f90b81271
+

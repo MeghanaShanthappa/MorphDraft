@@ -1,0 +1,87 @@
+{
+  "model": {
+    "repository": "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+    "revision": "ea3f2471cf1b1f0db85067f1ef93848e38e88c25"
+  },
+  "dtype": "bfloat16",
+  "gpu": "NVIDIA A100 80GB PCIe",
+  "gpu_memory_bytes": 85093777408,
+  "torch": "2.11.0+cu130",
+  "transformers": "4.57.1",
+  "cpu": "Intel Xeon Silver 4210R",
+  "torch_cpu_threads": 1,
+  "batch_size": 1,
+  "concurrency": 1,
+  "cap": 8,
+  "ngram_min": 2,
+  "ngram_max": 8,
+  "max_new_tokens": 512,
+  "repetitions": 1,
+  "seed": 42,
+  "timing_includes": [
+    "initial_tokenization",
+    "index_build",
+    "prefill",
+    "CPU_proposals",
+    "GPU_verification",
+    "KV_rollback",
+    "synchronization"
+  ],
+  "timing_excludes": [
+    "model_load",
+    "warmup",
+    "network",
+    "request_queue"
+  ],
+  "source_hashes": {
+    "benchmark.py": "ad34e7a2d83ad3ee256f686e4a86233141261180fc41ab8052984f02aa40ba8f",
+    "proposers.py": "57ac8a926513e1a8e2c221b58a9f092f30be2a245ae212bd7ef5bfca54bfe44f",
+    "tasks.py": "919d8a4af191af24a56708ba9062954add847e78541bc3dd92b263eae10493a3"
+  },
+  "tasks": [
+    {
+      "name": "migrate8",
+      "kind": "migration",
+      "calls": 8,
+      "source": "def process_records():\n    result_0 = legacy_fetch('record_0', retries=1)\n    result_1 = legacy_fetch('record_1', retries=1)\n    result_2 = legacy_fetch('record_2', retries=1)\n    result_3 = legacy_fetch('record_3', retries=1)\n    result_4 = legacy_fetch('record_4', retries=1)\n    result_5 = legacy_fetch('record_5', retries=1)\n    result_6 = legacy_fetch('record_6', retries=1)\n    result_7 = legacy_fetch('record_7', retries=1)\n",
+      "instruction": "Replace every legacy_fetch call with client.fetch and append timeout=10 to each call.",
+      "prompt": "Replace every legacy_fetch call with client.fetch and append timeout=10 to each call. Keep every assignment variable and every string literal unchanged. Preserve statement order and formatting. Do not add a return statement, loop, imports, comments or explanation. Return the complete function in one Python code block.\n```python\ndef process_records():\n    result_0 = legacy_fetch('record_0', retries=1)\n    result_1 = legacy_fetch('record_1', retries=1)\n    result_2 = legacy_fetch('record_2', retries=1)\n    result_3 = legacy_fetch('record_3', retries=1)\n    result_4 = legacy_fetch('record_4', retries=1)\n    result_5 = legacy_fetch('record_5', retries=1)\n    result_6 = legacy_fetch('record_6', retries=1)\n    result_7 = legacy_fetch('record_7', retries=1)\n```",
+      "prefix": "```python\ndef process_records():\n"
+    },
+    {
+      "name": "reorder8",
+      "kind": "reorder",
+      "calls": 8,
+      "source": "def process_records():\n    result_0 = old_send('account_0', 'message_0', retries=1)\n    result_1 = old_send('account_1', 'message_1', retries=1)\n    result_2 = old_send('account_2', 'message_2', retries=1)\n    result_3 = old_send('account_3', 'message_3', retries=1)\n    result_4 = old_send('account_4', 'message_4', retries=1)\n    result_5 = old_send('account_5', 'message_5', retries=1)\n    result_6 = old_send('account_6', 'message_6', retries=1)\n    result_7 = old_send('account_7', 'message_7', retries=1)\n",
+      "instruction": "Replace every old_send(account, message, retries=1) with client.send(message, account, retries=1, secure=True). Swap the two positional arguments in every call.",
+      "prompt": "Replace every old_send(account, message, retries=1) with client.send(message, account, retries=1, secure=True). Swap the two positional arguments in every call. Keep every assignment variable and every string literal unchanged. Preserve statement order and formatting. Do not add a return statement, loop, imports, comments or explanation. Return the complete function in one Python code block.\n```python\ndef process_records():\n    result_0 = old_send('account_0', 'message_0', retries=1)\n    result_1 = old_send('account_1', 'message_1', retries=1)\n    result_2 = old_send('account_2', 'message_2', retries=1)\n    result_3 = old_send('account_3', 'message_3', retries=1)\n    result_4 = old_send('account_4', 'message_4', retries=1)\n    result_5 = old_send('account_5', 'message_5', retries=1)\n    result_6 = old_send('account_6', 'message_6', retries=1)\n    result_7 = old_send('account_7', 'message_7', retries=1)\n```",
+      "prefix": "```python\ndef process_records():\n"
+    },
+    {
+      "name": "unchanged8",
+      "kind": "unchanged",
+      "calls": 8,
+      "source": "def process_records():\n    result_0 = legacy_fetch('record_0', retries=1)\n    result_1 = legacy_fetch('record_1', retries=1)\n    result_2 = legacy_fetch('record_2', retries=1)\n    result_3 = legacy_fetch('record_3', retries=1)\n    result_4 = legacy_fetch('record_4', retries=1)\n    result_5 = legacy_fetch('record_5', retries=1)\n    result_6 = legacy_fetch('record_6', retries=1)\n    result_7 = legacy_fetch('record_7', retries=1)\n",
+      "instruction": "Copy the function exactly, with no changes.",
+      "prompt": "Copy the function exactly, with no changes. Keep every assignment variable and every string literal unchanged. Preserve statement order and formatting. Do not add a return statement, loop, imports, comments or explanation. Return the complete function in one Python code block.\n```python\ndef process_records():\n    result_0 = legacy_fetch('record_0', retries=1)\n    result_1 = legacy_fetch('record_1', retries=1)\n    result_2 = legacy_fetch('record_2', retries=1)\n    result_3 = legacy_fetch('record_3', retries=1)\n    result_4 = legacy_fetch('record_4', retries=1)\n    result_5 = legacy_fetch('record_5', retries=1)\n    result_6 = legacy_fetch('record_6', retries=1)\n    result_7 = legacy_fetch('record_7', retries=1)\n```",
+      "prefix": "```python\ndef process_records():\n"
+    },
+    {
+      "name": "one_edit8",
+      "kind": "one_edit",
+      "calls": 8,
+      "source": "def process_records():\n    result_0 = legacy_fetch('record_0', retries=1)\n    result_1 = legacy_fetch('record_1', retries=1)\n    result_2 = legacy_fetch('record_2', retries=1)\n    result_3 = legacy_fetch('record_3', retries=1)\n    result_4 = legacy_fetch('record_4', retries=1)\n    result_5 = legacy_fetch('record_5', retries=1)\n    result_6 = legacy_fetch('record_6', retries=1)\n    result_7 = legacy_fetch('record_7', retries=1)\n",
+      "instruction": "Change ONLY result_0 to use client.fetch with timeout=10. Leave result_1 and every later assignment exactly unchanged.",
+      "prompt": "Change ONLY result_0 to use client.fetch with timeout=10. Leave result_1 and every later assignment exactly unchanged. Keep every assignment variable and every string literal unchanged. Preserve statement order and formatting. Do not add a return statement, loop, imports, comments or explanation. Return the complete function in one Python code block.\n```python\ndef process_records():\n    result_0 = legacy_fetch('record_0', retries=1)\n    result_1 = legacy_fetch('record_1', retries=1)\n    result_2 = legacy_fetch('record_2', retries=1)\n    result_3 = legacy_fetch('record_3', retries=1)\n    result_4 = legacy_fetch('record_4', retries=1)\n    result_5 = legacy_fetch('record_5', retries=1)\n    result_6 = legacy_fetch('record_6', retries=1)\n    result_7 = legacy_fetch('record_7', retries=1)\n```",
+      "prefix": "```python\ndef process_records():\n"
+    }
+  ],
+  "methods": [
+    "autoregressive",
+    "ngram",
+    "heuristic",
+    "rules"
+  ],
+  "scope": "Constructed prefix-conditioned code edits; custom Transformers loop, not vLLM; batch-one throughput only",
+  "parameters": 494032768
+}

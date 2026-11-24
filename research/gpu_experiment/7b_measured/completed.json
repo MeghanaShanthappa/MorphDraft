@@ -1,0 +1,14 @@
+{
+  "records": 160,
+  "all_outputs_match": true,
+  "independent_checks": [
+    {
+      "case": "migrate8",
+      "matches_generate": true
+    },
+    {
+      "case": "migrate16",
+      "matches_generate": true
+    }
+  ]
+}

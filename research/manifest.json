@@ -1,0 +1,30 @@
+{
+  "files": {
+    "HUMANEVAL_LICENSE.txt": "bcba3de214851cce46ed5af42d6698044616eeace887c3231bc7a20474ab639e",
+    "corpus_selection.json": "a60063b5e6a4071eb752aa828fe1317dad221f49033a92735859bbf35f92912c",
+    "verify_benchmark.py": "d5e74f5a43917724f6c23fee6f8c01f02512da8964393773d8323ec0caf75414",
+    "pilot_results.json": "b004dd29ff312b9b5cb86f0da9f95a2036775c31f28c3903a028b37a0e212042",
+    "test_invariants.py": "440f3200380af227f2d598fd91cb38cd5938846105022637e1a970b679abb576",
+    "heuristic_control.json": "387bda80f8e98467da81862de5e36b7d7e22ca84ccc94890c8a67721d24f0b22",
+    "corpus_pilot.py": "55835b09a392c78f008a683562bb12decceb53f6b734aa16715dcb772f4a3535",
+    "README.md": "9c4dc81f4c9b78abcb2bc2c61ddf0cfcbceeb4f6a651456a18a50b5fcf61d048",
+    "traces.json": "fec3260643fa4ea1d0c7693e68e1f69b42db52492f033088325b23c1b561ced2",
+    "pilot.py": "e7457597595c999d2721cc63c9025c7e5a736185fa8644009c835852f01b62b3",
+    "completion_results.json": "c74c7987e610863e5ebfdf47ab1ffb70d9fb34500cddef2bfb1edeb3d1c0ba79",
+    "edit_rule_proof.json": "9562ff4f0b65fb915e3e9708a82b83933159f1d3230d7d56ea3cf74631755ab4",
+    "edit_rule_proof.py": "37630e87df007ee1f62b8558d90377bd36b16f63ec44fd286955f72be62ba9a1",
+    "corpus_results.json": "891b636b8e939b857317f295b8e1b47b4886597f0b255bb646c6c0370b703ef9",
+    "heuristic_control.py": "e3907c74b6ea2cde2b3b51cccade80837bc7e08909368eae7cfff950e77937de",
+    "dataset_source.json": "60207828986b019b37587403e7d57230bcb9ee38b0fb578ae13d26fc5392e6e0",
+    "research_status.json": "8e65b746c177b3a776aa166f9591b972bb1d79c0092cf74129d30984120c76ac",
+    "verification_benchmark.json": "9e6f931f6ff099d3bef0dfd8295ebb2303a34bf6c9760defaaab41832a91fd1f",
+    "PROPOSAL.txt": "a2928cf36773da308aa90fa218968db979f107ff67206fbc4e3b16908ae5b417",
+    "completion_pilot.py": "f98c46b320ee50fa12fc8c468cf684fae2425efac99d43dc76b217956d5a5afc"
+  },
+  "tests": {
+    "matcher_invariants": 7,
+    "symbolic_rule_assertions": 6
+  },
+  "scope": "Exploratory; broader online edit rule proposal not integrated",
+  "independent_verification": "All 8 custom greedy verifier outputs also match Transformers.generate outputs."
+}

@@ -1,0 +1,9 @@
+{
+  "gpu": "NVIDIA A100 80GB PCIe",
+  "memory_mib": 81920,
+  "driver": "580.159.03",
+  "cpu": "Intel Xeon Silver 4210R",
+  "torch_cpu_threads": 1,
+  "gpu_target": true,
+  "CPU_rule_learning": true
+}

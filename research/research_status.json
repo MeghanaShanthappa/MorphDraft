@@ -1,0 +1,22 @@
+{
+  "proposal_url": "https://chatgpt.com/space/page_7624a31fcec08191be2fdcf65be9e35c",
+  "research_started_utc": "2026-11-24 19:04:43",
+  "status": "Restricted GPU prototype measured; novelty, real-world edits and vLLM performance unestablished",
+  "implemented": [
+    "parameterized proposer",
+    "greedy verifier with KV rollback",
+    "positional renaming control",
+    "joint anti-unification mechanism proof",
+    "restricted online edit-pair alignment by unique assignment names",
+    "CPU rule induction with GPU greedy verification",
+    "A100 7B BF16 benchmark: 160 token-identical measured requests"
+  ],
+  "not_implemented": [
+    "general source/output alignment",
+    "vLLM integration",
+    "real-world code edit throughput study",
+    "stochastic verification",
+    "high-concurrency serving evaluation"
+  ],
+  "gpu_report_url": "https://chatgpt.com/space/page_385e3d0c62fc8191898e7b6f90b81271"
+}

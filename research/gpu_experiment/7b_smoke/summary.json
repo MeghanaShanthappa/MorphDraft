@@ -1,0 +1,309 @@
+{
+  "complete": true,
+  "protocol_scope": "Constructed prefix-conditioned code edits; custom Transformers loop, not vLLM; batch-one throughput only",
+  "gpu": "NVIDIA A100 80GB PCIe",
+  "model": {
+    "repository": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+  },
+  "dtype": "bfloat16",
+  "records": 16,
+  "all_outputs_match": true,
+  "methods": {
+    "autoregressive": {
+      "pooled_tokens_per_second": 41.51978167901532,
+      "total_seconds": 14.378688322962262,
+      "tokens": 597,
+      "all_outputs_match": true,
+      "runs": 4
+    },
+    "ngram": {
+      "pooled_tokens_per_second": 144.91005324705142,
+      "total_seconds": 4.11979698180221,
+      "tokens": 597,
+      "all_outputs_match": true,
+      "runs": 4
+    },
+    "heuristic": {
+      "pooled_tokens_per_second": 139.1871455306399,
+      "total_seconds": 4.289189190021716,
+      "tokens": 597,
+      "all_outputs_match": true,
+      "runs": 4
+    },
+    "rules": {
+      "pooled_tokens_per_second": 199.76940279857152,
+      "total_seconds": 2.9884456360014156,
+      "tokens": 597,
+      "all_outputs_match": true,
+      "runs": 4
+    }
+  },
+  "cases": {
+    "migrate8": {
+      "kind": "migration",
+      "methods": {
+        "autoregressive": {
+          "median_seconds": 3.2397135889623314,
+          "median_tokens_per_second": 42.59635804540392,
+          "tokens": 138,
+          "steps": 138,
+          "median_proposal_seconds": 0.00011834967881441116,
+          "median_setup_seconds": 4.7392677515745163e-07,
+          "median_prefill_seconds": 0.027668947004713118,
+          "all_outputs_match": true,
+          "first_rule_after_tokens": null,
+          "rules": null
+        },
+        "ngram": {
+          "median_seconds": 1.062652206979692,
+          "median_tokens_per_second": 129.86374948792374,
+          "tokens": 138,
+          "steps": 37,
+          "median_proposal_seconds": 0.0008794198511168361,
+          "median_setup_seconds": 0.0005385780241340399,
+          "median_prefill_seconds": 0.027665385976433754,
+          "all_outputs_match": true,
+          "first_rule_after_tokens": null,
+          "rules": null
+        },
+        "heuristic": {
+          "median_seconds": 1.073769447975792,
+          "median_tokens_per_second": 128.5192089048069,
+          "tokens": 138,
+          "steps": 37,
+          "median_proposal_seconds": 0.004845727700740099,
+          "median_setup_seconds": 0.0007096630288287997,
+          "median_prefill_seconds": 0.02767101104836911,
+          "all_outputs_match": true,
+          "first_rule_after_tokens": null,
+          "rules": 0
+        },
+        "rules": {
+          "median_seconds": 0.6844614599831402,
+          "median_tokens_per_second": 201.6183643172535,
+          "tokens": 138,
+          "steps": 24,
+          "median_proposal_seconds": 0.019144983030855656,
+          "median_setup_seconds": 0.0007155250059440732,
+          "median_prefill_seconds": 0.027628247975371778,
+          "all_outputs_match": true,
+          "first_rule_after_tokens": 38,
+          "rules": 1
+        }
+      }
+    },
+    "reorder8": {
+      "kind": "reorder",
+      "methods": {
+        "autoregressive": {
+          "median_seconds": 4.740524908993393,
+          "median_tokens_per_second": 40.92373813540284,
+          "tokens": 194,
+          "steps": 194,
+          "median_proposal_seconds": 0.0001703586895018816,
+          "median_setup_seconds": 4.270114004611969e-07,
+          "median_prefill_seconds": 0.03595800301991403,
+          "all_outputs_match": true,
+          "first_rule_after_tokens": null,
+          "rules": null
+        },
+        "ngram": {
+          "median_seconds": 1.9382089748978615,
+          "median_tokens_per_second": 100.09240619176438,
+          "tokens": 194,
+          "steps": 69,
+          "median_proposal_seconds": 0.001357368309982121,
+          "median_setup_seconds": 0.0006620950298383832,
+          "median_prefill_seconds": 0.035754865035414696,
+          "all_outputs_match": true,
+          "first_rule_after_tokens": null,
+          "rules": null
+        },
+        "heuristic": {
+          "median_seconds": 2.0691867930581793,
+          "median_tokens_per_second": 93.75663939613464,
+          "tokens": 194,
+          "steps": 69,
+          "median_proposal_seconds": 0.0075588771142065525,
+          "median_setup_seconds": 0.0008174020331352949,
+          "median_prefill_seconds": 0.035739770042710006,
+          "all_outputs_match": true,
+          "first_rule_after_tokens": null,
+          "rules": 0
+        },
+        "rules": {
+          "median_seconds": 1.11757219908759,
+          "median_tokens_per_second": 173.59057442408266,
+          "tokens": 194,
+          "steps": 38,
+          "median_proposal_seconds": 0.02542853495106101,
+          "median_setup_seconds": 0.0008904690621420741,
+          "median_prefill_seconds": 0.03569640894420445,
+          "all_outputs_match": true,
+          "first_rule_after_tokens": 52,
+          "rules": 1
+        }
+      }
+    },
+    "unchanged8": {
+      "kind": "unchanged",
+      "methods": {
+        "autoregressive": {
+          "median_seconds": 3.1402323059737682,
+          "median_tokens_per_second": 41.3982111300163,
+          "tokens": 130,
+          "steps": 130,
+          "median_proposal_seconds": 0.00011488143354654312,
+          "median_setup_seconds": 4.769535735249519e-07,
+          "median_prefill_seconds": 0.0275938460836187,
+          "all_outputs_match": true,
+          "first_rule_after_tokens": null,
+          "rules": null
+        },
+        "ngram": {
+          "median_seconds": 0.4923249779967591,
+          "median_tokens_per_second": 264.0532286802961,
+          "tokens": 130,
+          "steps": 16,
+          "median_proposal_seconds": 0.0006602420471608639,
+          "median_setup_seconds": 0.0005120219429954886,
+          "median_prefill_seconds": 0.027622980996966362,
+          "all_outputs_match": true,
+          "first_rule_after_tokens": null,
+          "rules": null
+        },
+        "heuristic": {
+          "median_seconds": 0.4789027660153806,
+          "median_tokens_per_second": 271.4538508132669,
+          "tokens": 130,
+          "steps": 16,
+          "median_proposal_seconds": 0.0030664156656712294,
+          "median_setup_seconds": 0.0006117509910836816,
+          "median_prefill_seconds": 0.027527251979336143,
+          "all_outputs_match": true,
+          "first_rule_after_tokens": null,
+          "rules": 0
+        },
+        "rules": {
+          "median_seconds": 0.5538868689909577,
+          "median_tokens_per_second": 234.7049682488903,
+          "tokens": 130,
+          "steps": 16,
+          "median_proposal_seconds": 0.003571057110093534,
+          "median_setup_seconds": 0.0008457159856334329,
+          "median_prefill_seconds": 0.031952747027389705,
+          "all_outputs_match": true,
+          "first_rule_after_tokens": null,
+          "rules": 0
+        }
+      }
+    },
+    "one_edit8": {
+      "kind": "one_edit",
+      "methods": {
+        "autoregressive": {
+          "median_seconds": 3.258217519032769,
+          "median_tokens_per_second": 41.43369778457147,
+          "tokens": 135,
+          "steps": 135,
+          "median_proposal_seconds": 0.00011860416270792484,
+          "median_setup_seconds": 4.130415618419647e-07,
+          "median_prefill_seconds": 0.027788950013928115,
+          "all_outputs_match": true,
+          "first_rule_after_tokens": null,
+          "rules": null
+        },
+        "ngram": {
+          "median_seconds": 0.6266108219278976,
+          "median_tokens_per_second": 215.4447310447729,
+          "tokens": 135,
+          "steps": 22,
+          "median_proposal_seconds": 0.0006364218425005674,
+          "median_setup_seconds": 0.0005575710674747825,
+          "median_prefill_seconds": 0.027833058033138514,
+          "all_outputs_match": true,
+          "first_rule_after_tokens": null,
+          "rules": null
+        },
+        "heuristic": {
+          "median_seconds": 0.6673301829723641,
+          "median_tokens_per_second": 202.29865731337782,
+          "tokens": 135,
+          "steps": 23,
+          "median_proposal_seconds": 0.020034086075611413,
+          "median_setup_seconds": 0.0006734170019626617,
+          "median_prefill_seconds": 0.027783168014138937,
+          "all_outputs_match": true,
+          "first_rule_after_tokens": 37,
+          "rules": 1
+        },
+        "rules": {
+          "median_seconds": 0.6325251079397276,
+          "median_tokens_per_second": 213.43026277600976,
+          "tokens": 135,
+          "steps": 22,
+          "median_proposal_seconds": 0.004319028230383992,
+          "median_setup_seconds": 0.0006815129891037941,
+          "median_prefill_seconds": 0.02779122709762305,
+          "all_outputs_match": true,
+          "first_rule_after_tokens": null,
+          "rules": 0
+        }
+      }
+    }
+  },
+  "rules_vs": {
+    "autoregressive": {
+      "paired_median_latency_speedup": 4.811427101013341,
+      "descriptive_task_bootstrap_95": [
+        4.386131015138709,
+        5.396313638237052
+      ]
+    },
+    "ngram": {
+      "paired_median_latency_speedup": 1.378575180412035,
+      "descriptive_task_bootstrap_95": [
+        0.9431258464023659,
+        1.6652636685071869
+      ]
+    },
+    "heuristic": {
+      "paired_median_latency_speedup": 1.4352575594317034,
+      "descriptive_task_bootstrap_95": [
+        0.966134000057142,
+        1.7441162795231726
+      ]
+    }
+  },
+  "requested_edit_audit": {
+    "migrate8": {
+      "parses": true,
+      "matches_requested_AST": false,
+      "matches_requested_ignoring_keyword_order": false
+    },
+    "reorder8": {
+      "parses": true,
+      "matches_requested_AST": true,
+      "matches_requested_ignoring_keyword_order": true
+    },
+    "unchanged8": {
+      "parses": true,
+      "matches_requested_AST": true,
+      "matches_requested_ignoring_keyword_order": true
+    },
+    "one_edit8": {
+      "parses": true,
+      "matches_requested_AST": false,
+      "matches_requested_ignoring_keyword_order": true
+    }
+  },
+  "limitations": [
+    "constructed tasks with known source assignment identifiers",
+    "batch size one and concurrency one; no serving-capacity result",
+    "custom Transformers loop, not compiled vLLM baselines",
+    "rule induction and all source rewriting charged to CPU proposal time",
+    "no future target tokens or expected edited source are given to proposers",
+    "quality audit does not filter timing rows"
+  ]
+}

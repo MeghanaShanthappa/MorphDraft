@@ -1,0 +1,86 @@
+Draft research proposal for speculative decoding by learning repeated edits
+
+**Research direction:** learn repeated code edits from the target model’s already committed output, then apply those edits on the CPU to construct speculative continuations. The target model continues to verify every proposed token. This is a candidate paper direction; the full method and its novelty are not established.
+
+The initial parameterized n-gram prototype exposes an important limitation: it can beat literal matching on simple renaming examples, but an ordinary positional renaming heuristic performs better. A stronger contribution would need to learn transformations such as API migration, argument insertion, and consistent changes across different source contexts.
+
+# The proposed problem
+
+Existing text may contain the right structure with the wrong names or API calls. Consider a source file containing `legacy_fetch("first", retries=1)`, `legacy_fetch("second", retries=1)`, and `legacy_fetch("third", retries=1)`. During generation, the target commits the first two as `client.fetch("first", retries=1, timeout=10)` and `client.fetch("second", retries=1, timeout=10)`. A CPU component could infer the shared transformation and propose `client.fetch("third", retries=1, timeout=10)` when generation reaches the third call. That proposal remains a guess, subject to normal target verification.
+
+**The unit of reuse is an observed transformation applied to new source content.** The research question is whether transformation reuse increases accepted continuation length enough to repay parsing, alignment, rule induction, tokenization, and verification costs. Repeated API migration and distributed code edits are the initial target workloads; general conversation is outside the initial claim.
+
+# Proposed algorithm
+
+1. Index code from the input prompt with a concrete syntax representation, preserving source bytes, lexical scope, and token offsets.
+
+2. Maintain a small set of source alignments using literal anchors and parameterized matching. Represent repeated identifiers consistently rather than replacing every identifier with the same wildcard.
+
+3. Retain the source offsets of copied draft tokens. At a rejection, open a pending edit interval. When generation later reaches a unique, consistent source anchor, close the interval to obtain a before/after pair from the known source and committed output. Require complete syntax fragments and abstain on ambiguous alignments. Neither unverified drafts nor verifier rows after the first rejection are trusted observations of the actual continuation.
+
+4. Jointly generalize two or more observed edit pairs. Share placeholders across the before and after patterns, preserving repeated-argument relationships. For example, infer `legacy_fetch($arg, retries=1) → client.fetch($arg, retries=1, timeout=10)`. Abstain when the target pattern requires a new placeholder unavailable from the source.
+
+5. Apply an eligible rule to a later source fragment, preserving concrete formatting and producing target-token proposals. Keep exact matching as a fallback. Cap alignment states, rule size, retained memory, and CPU work per decoding step.
+
+6. Let the target verify the proposed continuation. Advance only committed state; discard the unaccepted draft suffix. Update rule utility from actual accepted length and measured cost. Conflicting edits narrow or retire a rule.
+
+An initial implementation should support one linear draft and ordinary greedy verification. Tree proposals, stochastic sampling, and multiple transformation hypotheses should be added only with the runtime’s correct acceptance and rollback semantics. The symbolic rule is predictive; it must never force output tokens or change grammar masks.
+
+# Why the CPU matters
+
+Parsing, small symbolic indexes, scope tracking, and rule instantiation can run on the host CPU without loading a neural draft model onto the GPU. The proposed serving design keeps GPU verification unchanged and uses bounded CPU work to provide candidate continuations. This is an algorithm and systems hypothesis, not evidence that any NVIDIA CPU is faster than another processor.
+
+The present prototype scans the generated text and retokenizes prefixes conservatively. Its cost can grow with context length. A practical implementation needs incremental parsing, reusable alignment state, efficient indexing, and careful handling of identifiers that span different numbers of BPE tokens. These costs must appear in end-to-end measurements.
+
+# What already exists
+
+| Prior work | Established contribution | Consequence for this proposal |
+| --- | --- | --- |
+| [CopySpec](https://arxiv.org/html/2502.08923) | Hash-indexed copying of repeated token sequences | Replacing a linear scan with a hash map is insufficient novelty. |
+| [SAM Decoding](https://aclanthology.org/2025.acl-long.595/) | Suffix-automaton retrieval from dynamic and static text | A suffix automaton alone is already covered. |
+| [Suffix Decoding in vLLM](https://docs.vllm.ai/en/stable/features/speculative_decoding/suffix/) | Matching-based drafting with variable-length suffix reuse | Evaluate the supported suffix implementation, not only an older CPU n-gram path. |
+| [Cacheback](https://arxiv.org/html/2511.21699v1) | Dynamic and frozen n-gram caches with tree drafts | Bounded caches and recency-based reuse are established. |
+| [AdaPLD](https://arxiv.org/html/2606.05742) | Lexical and semantic retrieval with branched reuse | Semantic fallback and branching are insufficient novelty. |
+| [EfficientEdit](https://arxiv.org/html/2506.02780) | Original-code reuse and an edit-oriented neural drafter | Reusing code during editing is established; inferred symbolic transformations need separate evidence. |
+| [Blazedit](https://huggingface.co/blog/ganler/blazedit) | Combines prompt lookup with neural drafting for code editing | A generic hybrid proposer is insufficient novelty. |
+| [ToolSpec](https://arxiv.org/html/2604.13519) | Schema-aware tool-call drafting and retrieval | Filling known tool syntax is established. |
+| [FactorSpec](https://arxiv.org/abs/2611.02297) | Constraint-derived drafts under exact relational masks | The proposed method should retain the original target’s unconstrained verification rule. |
+| [Getafix](https://arxiv.org/abs/1902.06111) | Learns reusable code-edit patterns using anti-unification | Edit-pattern induction itself is established and must be credited. |
+| [Parameterized pattern matching](https://doi.org/10.1006/jcss.1996.0003) | Matching under consistent symbol renaming | Identifier normalization and consistent binding are classical algorithms. |
+
+**Candidate distinction:** induce and reuse symbolic transformations online within a single draft–verify decoding session, using only already committed source/output pairs, and optimize their use under a CPU latency budget. [EditLord](https://proceedings.mlr.press/v267/li25al.html) already learns explicit edit rules from training pairs with a language model for finetuning or prompting, so learning code transformations broadly is not new. The proposed contribution would have to establish inexpensive symbolic induction during decoding while retaining the target model’s verification rule. The targeted search did not establish an identical method, but it is not an exhaustive novelty review.
+
+# Pilot evidence and the negative control
+
+The exploratory model was Qwen2.5-Coder-0.5B-Instruct at revision `ea3f2471cf1b1f0db85067f1ef93848e38e88c25`. All model computation ran on an Intel Xeon Silver 4210R with four CPU threads, FP32, PyTorch 2.11.0, and Transformers 4.57.1. These are constructed experiments, not a vLLM benchmark.
+
+In eight prefix-conditioned completion cases, three repetitions per method produced 72 runs. Median total request times summed across the eight cases were 15.635 seconds for ordinary greedy decoding, 16.364 seconds for exact n-gram speculation, and 13.809 seconds for a parameterized matcher with exact fallback. Target decode calls were 138, 95, and 75 respectively. All methods produced identical token IDs within each case across the measured runs.
+
+Timing includes prefill, drafting, verification, and rollback; it excludes loading, warmup, initial tokenization, and index construction. The exact baseline is a Python scan rather than compiled vLLM KMP. Its windows are 2–8 BPE tokens, while structural windows are 3–24 Python lexemes, with an eight-token draft cap. These results do not establish a controlled matching-algorithm comparison, statistical significance, or a serving-system gain.
+
+The larger check used the first 16 eligible HumanEval source functions to construct renaming completions, with reference implementations visible in the prompts. This is not an official HumanEval accuracy evaluation. Across 630 generated tokens, offline greedy replay required 372 steps for exact matching, 452 for the structural matcher alone, and 349 for the hybrid. The hybrid improved 6 cases, tied 8, and worsened 2.
+
+**The simple control was stronger:** renaming source parameters by their positions in the observed new header, then applying ordinary matching, needed 56 steps on the eight small examples and 282 on the 16 source-derived examples. Both beat the structural hybrid. Therefore, the implemented parameterized matcher is not a sufficient paper contribution. The broader edit-rule proposal has only a constructed symbolic mechanism proof, with six assertions; it has not been integrated into model decoding.
+
+An earlier ordinary-chat check is retained separately: the small model ignored most requested renamings and repeated the input. Those failures were not discarded. Supplying the new function header changed the experimental task to prefix-conditioned completion. Matching a model’s output also does not mean the generated program is correct.
+
+# Experiments that decide whether to pursue a paper
+
+Use a development set to freeze rules and budgets, then a project-disjoint test set of real edits. Include API migrations with inserted arguments, reordered arguments, scoped renaming, mixed transformations, unchanged files, and edits with little repetition. Keep constructed transformations as diagnostic tests rather than the main result. Candidate workloads include CanItEdit and Blazedit; split projects and edit families to test generalization.
+
+The essential baselines are ordinary decoding; the pinned runtime’s exact n-gram and suffix methods; a positional renamer; a first-observed identifier-replacement table; and a whole-source rewrite followed by ordinary lookup. Add SAM, CopySpec, and relevant editing or semantic-reuse methods when their claims overlap. Match CPU budgets, candidate-token budgets, context, batching, tokenizer, and verification kernels.
+
+Measure end-to-end latency, time per output token, accepted tokens per target call, CPU time, index/rule memory, prefill cost, parser/tokenizer overhead, and p95 latency at multiple request loads. Report failures and low-repetition slowdowns. Use at least two coding targets, long contexts, and randomized repeated timing. Validate output equality under greedy decoding; any sampling claim needs the proper residual sampler and separate correctness tests.
+
+Test the CPU component on the NVIDIA CPU available to the team and a comparison x86 host, keeping the GPU verifier and workload controlled where possible. Separate hardware effects from algorithm effects. A CPU-serving experiment is a different result from a CPU proposer assisting GPU inference.
+
+**Suggested continuation criterion:** pursue the full study if online rule induction improves held-out end-to-end latency by at least 10% over the strongest matched simple baseline, with a task-level confidence interval excluding no gain and a predeclared limit on low-repetition regressions. This is a proposed screening threshold, not an observed result.
+
+# Paper framing
+
+Working title: **Speculative Decoding by Learning Repeated Edits**. A possible contribution is a formal model of transformation reuse, a bounded online induction algorithm with explicit state invariants, and an evaluation showing when it adds value beyond direct copying and simple replacement rules. Anti-unification and parameterized matching are building blocks, not new inventions.
+
+For an ICLR submission, the learning formulation, generalization evidence, and analysis would need to carry the paper. A vLLM implementation whose contribution is primarily host efficiency may fit a systems venue more naturally. Neither the current timing pilot nor the symbolic proof establishes publication readiness.
+
+Saved Page: https://chatgpt.com/space/page_7624a31fcec08191be2fdcf65be9e35c
+

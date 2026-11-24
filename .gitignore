@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+.venv/
+models/
+runs/
+*.safetensors
+*.bin
+*.pt
+*.pth
+paper/preview-*.png
+.env
+.env.*
+!.env.example

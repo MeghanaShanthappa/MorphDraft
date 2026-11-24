@@ -1,0 +1,134 @@
+[
+  {
+    "task_id": "HumanEval/0",
+    "source": "def has_close_elements(numbers: List[float], threshold: float) -> bool:\n    for idx, elem in enumerate(numbers):\n        for idx2, elem2 in enumerate(numbers):\n            if idx != idx2:\n                distance = abs(elem - elem2)\n                if distance < threshold:\n                    return True\n    return False\n",
+    "prefix": "```python\ndef has_close_elements(parameter_0: List[float], parameter_1: float) -> bool:\n    ",
+    "renames": {
+      "numbers": "parameter_0",
+      "threshold": "parameter_1"
+    }
+  },
+  {
+    "task_id": "HumanEval/1",
+    "source": "def separate_paren_groups(paren_string: str) -> List[str]:\n    result = []\n    current_string = []\n    current_depth = 0\n    for c in paren_string:\n        if c == '(':\n            current_depth += 1\n            current_string.append(c)\n        elif c == ')':\n            current_depth -= 1\n            current_string.append(c)\n            if current_depth == 0:\n                result.append(''.join(current_string))\n                current_string.clear()\n    return result\n",
+    "prefix": "```python\ndef separate_paren_groups(parameter_0: str) -> List[str]:\n    ",
+    "renames": {
+      "paren_string": "parameter_0"
+    }
+  },
+  {
+    "task_id": "HumanEval/2",
+    "source": "def truncate_number(number: float) -> float:\n    return number % 1.0\n",
+    "prefix": "```python\ndef truncate_number(parameter_0: float) -> float:\n    ",
+    "renames": {
+      "number": "parameter_0"
+    }
+  },
+  {
+    "task_id": "HumanEval/3",
+    "source": "def below_zero(operations: List[int]) -> bool:\n    balance = 0\n    for op in operations:\n        balance += op\n        if balance < 0:\n            return True\n    return False\n",
+    "prefix": "```python\ndef below_zero(parameter_0: List[int]) -> bool:\n    ",
+    "renames": {
+      "operations": "parameter_0"
+    }
+  },
+  {
+    "task_id": "HumanEval/4",
+    "source": "def mean_absolute_deviation(numbers: List[float]) -> float:\n    mean = sum(numbers) / len(numbers)\n    return sum((abs(x - mean) for x in numbers)) / len(numbers)\n",
+    "prefix": "```python\ndef mean_absolute_deviation(parameter_0: List[float]) -> float:\n    ",
+    "renames": {
+      "numbers": "parameter_0"
+    }
+  },
+  {
+    "task_id": "HumanEval/5",
+    "source": "def intersperse(numbers: List[int], delimeter: int) -> List[int]:\n    if not numbers:\n        return []\n    result = []\n    for n in numbers[:-1]:\n        result.append(n)\n        result.append(delimeter)\n    result.append(numbers[-1])\n    return result\n",
+    "prefix": "```python\ndef intersperse(parameter_0: List[int], parameter_1: int) -> List[int]:\n    ",
+    "renames": {
+      "numbers": "parameter_0",
+      "delimeter": "parameter_1"
+    }
+  },
+  {
+    "task_id": "HumanEval/7",
+    "source": "def filter_by_substring(strings: List[str], substring: str) -> List[str]:\n    return [x for x in strings if substring in x]\n",
+    "prefix": "```python\ndef filter_by_substring(parameter_0: List[str], parameter_1: str) -> List[str]:\n    ",
+    "renames": {
+      "strings": "parameter_0",
+      "substring": "parameter_1"
+    }
+  },
+  {
+    "task_id": "HumanEval/8",
+    "source": "def sum_product(numbers: List[int]) -> Tuple[int, int]:\n    sum_value = 0\n    prod_value = 1\n    for n in numbers:\n        sum_value += n\n        prod_value *= n\n    return (sum_value, prod_value)\n",
+    "prefix": "```python\ndef sum_product(parameter_0: List[int]) -> Tuple[int, int]:\n    ",
+    "renames": {
+      "numbers": "parameter_0"
+    }
+  },
+  {
+    "task_id": "HumanEval/9",
+    "source": "def rolling_max(numbers: List[int]) -> List[int]:\n    running_max = None\n    result = []\n    for n in numbers:\n        if running_max is None:\n            running_max = n\n        else:\n            running_max = max(running_max, n)\n        result.append(running_max)\n    return result\n",
+    "prefix": "```python\ndef rolling_max(parameter_0: List[int]) -> List[int]:\n    ",
+    "renames": {
+      "numbers": "parameter_0"
+    }
+  },
+  {
+    "task_id": "HumanEval/10",
+    "source": "def is_palindrome(string: str) -> bool:\n    return string == string[::-1]\n",
+    "prefix": "```python\ndef is_palindrome(parameter_0: str) -> bool:\n    ",
+    "renames": {
+      "string": "parameter_0"
+    }
+  },
+  {
+    "task_id": "HumanEval/12",
+    "source": "def longest(strings: List[str]) -> Optional[str]:\n    if not strings:\n        return None\n    maxlen = max((len(x) for x in strings))\n    for s in strings:\n        if len(s) == maxlen:\n            return s\n",
+    "prefix": "```python\ndef longest(parameter_0: List[str]) -> Optional[str]:\n    ",
+    "renames": {
+      "strings": "parameter_0"
+    }
+  },
+  {
+    "task_id": "HumanEval/13",
+    "source": "def greatest_common_divisor(a: int, b: int) -> int:\n    while b:\n        a, b = (b, a % b)\n    return a\n",
+    "prefix": "```python\ndef greatest_common_divisor(parameter_0: int, parameter_1: int) -> int:\n    ",
+    "renames": {
+      "a": "parameter_0",
+      "b": "parameter_1"
+    }
+  },
+  {
+    "task_id": "HumanEval/14",
+    "source": "def all_prefixes(string: str) -> List[str]:\n    result = []\n    for i in range(len(string)):\n        result.append(string[:i + 1])\n    return result\n",
+    "prefix": "```python\ndef all_prefixes(parameter_0: str) -> List[str]:\n    ",
+    "renames": {
+      "string": "parameter_0"
+    }
+  },
+  {
+    "task_id": "HumanEval/15",
+    "source": "def string_sequence(n: int) -> str:\n    return ' '.join([str(x) for x in range(n + 1)])\n",
+    "prefix": "```python\ndef string_sequence(parameter_0: int) -> str:\n    ",
+    "renames": {
+      "n": "parameter_0"
+    }
+  },
+  {
+    "task_id": "HumanEval/16",
+    "source": "def count_distinct_characters(string: str) -> int:\n    return len(set(string.lower()))\n",
+    "prefix": "```python\ndef count_distinct_characters(parameter_0: str) -> int:\n    ",
+    "renames": {
+      "string": "parameter_0"
+    }
+  },
+  {
+    "task_id": "HumanEval/17",
+    "source": "def parse_music(music_string: str) -> List[int]:\n    note_map = {'o': 4, 'o|': 2, '.|': 1}\n    return [note_map[x] for x in music_string.split(' ') if x]\n",
+    "prefix": "```python\ndef parse_music(parameter_0: str) -> List[int]:\n    ",
+    "renames": {
+      "music_string": "parameter_0"
+    }
+  }
+]

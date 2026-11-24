@@ -1,0 +1,90 @@
+{
+  "ngram": {
+    "cluster_unit": "constructed task family",
+    "families": {
+      "migration": [
+        "migrate8",
+        "migrate16"
+      ],
+      "reorder": [
+        "reorder8",
+        "reorder16"
+      ],
+      "unchanged": [
+        "unchanged8",
+        "unchanged16"
+      ],
+      "one_edit": [
+        "one_edit8"
+      ],
+      "mixed": [
+        "mixed12"
+      ]
+    },
+    "resamples": 20000,
+    "paired_median_speedup": 1.5494505077030212,
+    "descriptive_95": [
+      1.0835496169927847,
+      1.8812901262392179
+    ]
+  },
+  "heuristic": {
+    "cluster_unit": "constructed task family",
+    "families": {
+      "migration": [
+        "migrate8",
+        "migrate16"
+      ],
+      "reorder": [
+        "reorder8",
+        "reorder16"
+      ],
+      "unchanged": [
+        "unchanged8",
+        "unchanged16"
+      ],
+      "one_edit": [
+        "one_edit8"
+      ],
+      "mixed": [
+        "mixed12"
+      ]
+    },
+    "resamples": 20000,
+    "paired_median_speedup": 1.3404367388029423,
+    "descriptive_95": [
+      0.941465059625017,
+      1.8069984302087392
+    ]
+  },
+  "repeat_throughput": {
+    "autoregressive": [
+      41.120690710593706,
+      41.05443433708281,
+      41.0134200169344,
+      41.04267492637984,
+      41.03427750161321
+    ],
+    "ngram": [
+      132.54854829868773,
+      132.09891772992202,
+      132.0288903773005,
+      133.41903549589094,
+      132.51307548482205
+    ],
+    "heuristic": [
+      153.14591337547262,
+      151.99035744193944,
+      153.7012053515817,
+      153.76078785566537,
+      153.61151380672504
+    ],
+    "rules": [
+      206.04322060020937,
+      204.8625032350294,
+      206.0844334504003,
+      204.45851108190604,
+      206.2991575359899
+    ]
+  }
+}

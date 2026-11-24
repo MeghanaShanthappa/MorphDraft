@@ -1,0 +1,7 @@
+# Install a compatible CUDA PyTorch build separately.
+# Measured version: torch==2.11.0+cu130
+transformers==4.57.1
+tokenizers==0.22.2
+accelerate
+safetensors
+huggingface-hub>=0.34,<1.0

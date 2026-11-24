@@ -1,0 +1,222 @@
+{
+  "completion_results.json": [
+    {
+      "name": "mean",
+      "steps": 6,
+      "accepted": 10,
+      "drafted": 16,
+      "tokens": 16,
+      "tokens_per_oracle_step": 2.6666666666666665,
+      "proposer_us_total": 962.364
+    },
+    {
+      "name": "clamp",
+      "steps": 4,
+      "accepted": 9,
+      "drafted": 16,
+      "tokens": 13,
+      "tokens_per_oracle_step": 3.25,
+      "proposer_us_total": 571.3430000000001
+    },
+    {
+      "name": "normalize",
+      "steps": 7,
+      "accepted": 13,
+      "drafted": 24,
+      "tokens": 20,
+      "tokens_per_oracle_step": 2.857142857142857,
+      "proposer_us_total": 737.279
+    },
+    {
+      "name": "distance",
+      "steps": 7,
+      "accepted": 34,
+      "drafted": 40,
+      "tokens": 41,
+      "tokens_per_oracle_step": 5.857142857142857,
+      "proposer_us_total": 848.035
+    },
+    {
+      "name": "weighted",
+      "steps": 14,
+      "accepted": 4,
+      "drafted": 16,
+      "tokens": 18,
+      "tokens_per_oracle_step": 1.2857142857142858,
+      "proposer_us_total": 1286.97
+    },
+    {
+      "name": "count",
+      "steps": 9,
+      "accepted": 6,
+      "drafted": 24,
+      "tokens": 15,
+      "tokens_per_oracle_step": 1.6666666666666667,
+      "proposer_us_total": 855.34
+    },
+    {
+      "name": "unchanged",
+      "steps": 3,
+      "accepted": 5,
+      "drafted": 8,
+      "tokens": 8,
+      "tokens_per_oracle_step": 2.6666666666666665,
+      "proposer_us_total": 299.441
+    },
+    {
+      "name": "logic_change",
+      "steps": 6,
+      "accepted": 1,
+      "drafted": 16,
+      "tokens": 7,
+      "tokens_per_oracle_step": 1.1666666666666667,
+      "proposer_us_total": 555.287
+    }
+  ],
+  "corpus_results.json": [
+    {
+      "name": "HumanEval/0",
+      "steps": 24,
+      "accepted": 33,
+      "drafted": 72,
+      "tokens": 57,
+      "tokens_per_oracle_step": 2.375,
+      "proposer_us_total": 4657.565
+    },
+    {
+      "name": "HumanEval/1",
+      "steps": 42,
+      "accepted": 47,
+      "drafted": 156,
+      "tokens": 89,
+      "tokens_per_oracle_step": 2.119047619047619,
+      "proposer_us_total": 8505.936
+    },
+    {
+      "name": "HumanEval/2",
+      "steps": 4,
+      "accepted": 8,
+      "drafted": 16,
+      "tokens": 12,
+      "tokens_per_oracle_step": 3.0,
+      "proposer_us_total": 528.722
+    },
+    {
+      "name": "HumanEval/3",
+      "steps": 18,
+      "accepted": 17,
+      "drafted": 56,
+      "tokens": 35,
+      "tokens_per_oracle_step": 1.9444444444444444,
+      "proposer_us_total": 2437.328
+    },
+    {
+      "name": "HumanEval/4",
+      "steps": 58,
+      "accepted": 36,
+      "drafted": 152,
+      "tokens": 94,
+      "tokens_per_oracle_step": 1.6206896551724137,
+      "proposer_us_total": 9364.181
+    },
+    {
+      "name": "HumanEval/5",
+      "steps": 20,
+      "accepted": 4,
+      "drafted": 46,
+      "tokens": 24,
+      "tokens_per_oracle_step": 1.2,
+      "proposer_us_total": 3428.424
+    },
+    {
+      "name": "HumanEval/7",
+      "steps": 4,
+      "accepted": 14,
+      "drafted": 16,
+      "tokens": 18,
+      "tokens_per_oracle_step": 4.5,
+      "proposer_us_total": 677.877
+    },
+    {
+      "name": "HumanEval/8",
+      "steps": 20,
+      "accepted": 24,
+      "drafted": 79,
+      "tokens": 44,
+      "tokens_per_oracle_step": 2.2,
+      "proposer_us_total": 3244.434
+    },
+    {
+      "name": "HumanEval/9",
+      "steps": 27,
+      "accepted": 30,
+      "drafted": 88,
+      "tokens": 57,
+      "tokens_per_oracle_step": 2.111111111111111,
+      "proposer_us_total": 4389.597
+    },
+    {
+      "name": "HumanEval/10",
+      "steps": 4,
+      "accepted": 9,
+      "drafted": 16,
+      "tokens": 13,
+      "tokens_per_oracle_step": 3.25,
+      "proposer_us_total": 525.382
+    },
+    {
+      "name": "HumanEval/12",
+      "steps": 19,
+      "accepted": 28,
+      "drafted": 64,
+      "tokens": 47,
+      "tokens_per_oracle_step": 2.473684210526316,
+      "proposer_us_total": 2778.137
+    },
+    {
+      "name": "HumanEval/13",
+      "steps": 12,
+      "accepted": 23,
+      "drafted": 48,
+      "tokens": 35,
+      "tokens_per_oracle_step": 2.9166666666666665,
+      "proposer_us_total": 1765.738
+    },
+    {
+      "name": "HumanEval/14",
+      "steps": 13,
+      "accepted": 18,
+      "drafted": 40,
+      "tokens": 31,
+      "tokens_per_oracle_step": 2.3846153846153846,
+      "proposer_us_total": 1723.456
+    },
+    {
+      "name": "HumanEval/15",
+      "steps": 5,
+      "accepted": 16,
+      "drafted": 24,
+      "tokens": 21,
+      "tokens_per_oracle_step": 4.2,
+      "proposer_us_total": 610.037
+    },
+    {
+      "name": "HumanEval/16",
+      "steps": 3,
+      "accepted": 7,
+      "drafted": 8,
+      "tokens": 10,
+      "tokens_per_oracle_step": 3.3333333333333335,
+      "proposer_us_total": 448.96400000000006
+    },
+    {
+      "name": "HumanEval/17",
+      "steps": 9,
+      "accepted": 34,
+      "drafted": 40,
+      "tokens": 43,
+      "tokens_per_oracle_step": 4.777777777777778,
+      "proposer_us_total": 1251.005
+    }
+  ]
+}

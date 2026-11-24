@@ -1,0 +1,20 @@
+{
+  "passed": true,
+  "rows": 160,
+  "distinct_case_method_repeat_keys": 160,
+  "traces_checked": 32,
+  "verification_steps_checked": 2974,
+  "all_outputs_token_identical": true,
+  "independent_generate_checks": [
+    {
+      "case": "migrate8",
+      "matches_generate": true
+    },
+    {
+      "case": "migrate16",
+      "matches_generate": true
+    }
+  ],
+  "source_snapshot_hashes_match": true,
+  "scope": "Accounting and saved trace audit; does not establish real-world generalization or sampling correctness"
+}

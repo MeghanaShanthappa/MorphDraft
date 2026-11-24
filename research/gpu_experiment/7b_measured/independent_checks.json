@@ -1,0 +1,10 @@
+[
+  {
+    "case": "migrate8",
+    "matches_generate": true
+  },
+  {
+    "case": "migrate16",
+    "matches_generate": true
+  }
+]

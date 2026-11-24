@@ -1,0 +1,261 @@
+{
+  "scope": "Exploratory greedy trace replay, not vLLM latency results",
+  "model": {
+    "repository": "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+    "revision": "ea3f2471cf1b1f0db85067f1ef93848e38e88c25"
+  },
+  "torch": "2.11.0+cu130",
+  "transformers": "4.57.1",
+  "hardware": "",
+  "threads": 4,
+  "records": [
+    {
+      "name": "mean",
+      "output": "```python\ndef mean(values):\n    total = sum(values)\n    return total / len(values)\n```",
+      "exact": {
+        "steps": 7,
+        "accepted": 15,
+        "drafted": 16,
+        "tokens": 22,
+        "tokens_per_oracle_step": 3.142857142857143,
+        "proposer_us_median": 4.997,
+        "proposer_us_total": 39.499
+      },
+      "binding": {
+        "steps": 12,
+        "accepted": 10,
+        "drafted": 18,
+        "tokens": 22,
+        "tokens_per_oracle_step": 1.8333333333333333,
+        "proposer_us_median": 53.5945,
+        "proposer_us_total": 1645.7930000000001
+      },
+      "structure_without_rewrite": {
+        "steps": 12,
+        "accepted": 10,
+        "drafted": 18,
+        "tokens": 22,
+        "tokens_per_oracle_step": 1.8333333333333333,
+        "proposer_us_median": 28.3235,
+        "proposer_us_total": 1225.09
+      }
+    },
+    {
+      "name": "clamp",
+      "output": "```python\ndef clamp(value, lower, upper):\n    return max(lower, min(value, upper))\n```",
+      "exact": {
+        "steps": 7,
+        "accepted": 16,
+        "drafted": 16,
+        "tokens": 23,
+        "tokens_per_oracle_step": 3.2857142857142856,
+        "proposer_us_median": 4.284,
+        "proposer_us_total": 38.293
+      },
+      "binding": {
+        "steps": 15,
+        "accepted": 8,
+        "drafted": 8,
+        "tokens": 23,
+        "tokens_per_oracle_step": 1.5333333333333334,
+        "proposer_us_median": 33.749,
+        "proposer_us_total": 1138.84
+      },
+      "structure_without_rewrite": {
+        "steps": 15,
+        "accepted": 8,
+        "drafted": 8,
+        "tokens": 23,
+        "tokens_per_oracle_step": 1.5333333333333334,
+        "proposer_us_median": 26.7,
+        "proposer_us_total": 1044.645
+      }
+    },
+    {
+      "name": "normalize",
+      "output": "```python\ndef normalize(values):\n    total = sum(values)\n    return [value / total for value in values]\n```",
+      "exact": {
+        "steps": 8,
+        "accepted": 18,
+        "drafted": 24,
+        "tokens": 26,
+        "tokens_per_oracle_step": 3.25,
+        "proposer_us_median": 3.609,
+        "proposer_us_total": 40.034
+      },
+      "binding": {
+        "steps": 11,
+        "accepted": 15,
+        "drafted": 16,
+        "tokens": 26,
+        "tokens_per_oracle_step": 2.3636363636363638,
+        "proposer_us_median": 35.408,
+        "proposer_us_total": 1153.548
+      },
+      "structure_without_rewrite": {
+        "steps": 11,
+        "accepted": 15,
+        "drafted": 16,
+        "tokens": 26,
+        "tokens_per_oracle_step": 2.3636363636363638,
+        "proposer_us_median": 30.807,
+        "proposer_us_total": 1075.709
+      }
+    },
+    {
+      "name": "distance",
+      "output": "```python\ndef distance(x, y):\n    return ((x[0] - y[0]) ** 2 + (x[1] - y[1]) ** 2) ** 0.5\n```",
+      "exact": {
+        "steps": 10,
+        "accepted": 37,
+        "drafted": 40,
+        "tokens": 47,
+        "tokens_per_oracle_step": 4.7,
+        "proposer_us_median": 6.9145,
+        "proposer_us_total": 86.758
+      },
+      "binding": {
+        "steps": 16,
+        "accepted": 31,
+        "drafted": 31,
+        "tokens": 47,
+        "tokens_per_oracle_step": 2.9375,
+        "proposer_us_median": 41.7695,
+        "proposer_us_total": 2064.04
+      },
+      "structure_without_rewrite": {
+        "steps": 16,
+        "accepted": 31,
+        "drafted": 31,
+        "tokens": 47,
+        "tokens_per_oracle_step": 2.9375,
+        "proposer_us_median": 33.85,
+        "proposer_us_total": 1842.481
+      }
+    },
+    {
+      "name": "weighted",
+      "output": "```python\ndef weighted(values, weights):\n    return sum(value * weight for value, weight in zip(values, weights)) / sum(weights)\n```",
+      "exact": {
+        "steps": 8,
+        "accepted": 23,
+        "drafted": 24,
+        "tokens": 31,
+        "tokens_per_oracle_step": 3.875,
+        "proposer_us_median": 6.014,
+        "proposer_us_total": 51.075
+      },
+      "binding": {
+        "steps": 15,
+        "accepted": 16,
+        "drafted": 16,
+        "tokens": 31,
+        "tokens_per_oracle_step": 2.066666666666667,
+        "proposer_us_median": 35.847,
+        "proposer_us_total": 1582.89
+      },
+      "structure_without_rewrite": {
+        "steps": 15,
+        "accepted": 16,
+        "drafted": 16,
+        "tokens": 31,
+        "tokens_per_oracle_step": 2.066666666666667,
+        "proposer_us_median": 26.552,
+        "proposer_us_total": 1284.935
+      }
+    },
+    {
+      "name": "count",
+      "output": "```python\ndef count(items, target):\n    return sum(1 for item in items if item == target)\n```",
+      "exact": {
+        "steps": 8,
+        "accepted": 17,
+        "drafted": 24,
+        "tokens": 25,
+        "tokens_per_oracle_step": 3.125,
+        "proposer_us_median": 4.494,
+        "proposer_us_total": 45.82
+      },
+      "binding": {
+        "steps": 16,
+        "accepted": 9,
+        "drafted": 10,
+        "tokens": 25,
+        "tokens_per_oracle_step": 1.5625,
+        "proposer_us_median": 30.567500000000003,
+        "proposer_us_total": 1300.419
+      },
+      "structure_without_rewrite": {
+        "steps": 16,
+        "accepted": 9,
+        "drafted": 10,
+        "tokens": 25,
+        "tokens_per_oracle_step": 1.5625,
+        "proposer_us_median": 19.281,
+        "proposer_us_total": 1196.654
+      }
+    },
+    {
+      "name": "unchanged",
+      "output": "```python\ndef reverse(items):\n    return items[::-1]\n```",
+      "exact": {
+        "steps": 11,
+        "accepted": 4,
+        "drafted": 8,
+        "tokens": 15,
+        "tokens_per_oracle_step": 1.3636363636363635,
+        "proposer_us_median": 7.454,
+        "proposer_us_total": 123.223
+      },
+      "binding": {
+        "steps": 13,
+        "accepted": 2,
+        "drafted": 7,
+        "tokens": 15,
+        "tokens_per_oracle_step": 1.1538461538461537,
+        "proposer_us_median": 29.562,
+        "proposer_us_total": 788.5450000000001
+      },
+      "structure_without_rewrite": {
+        "steps": 13,
+        "accepted": 2,
+        "drafted": 7,
+        "tokens": 15,
+        "tokens_per_oracle_step": 1.1538461538461537,
+        "proposer_us_median": 20.878,
+        "proposer_us_total": 668.793
+      }
+    },
+    {
+      "name": "logic_change",
+      "output": "```python\ndef combine(left, right):\n    return left - right\n```",
+      "exact": {
+        "steps": 16,
+        "accepted": 1,
+        "drafted": 24,
+        "tokens": 17,
+        "tokens_per_oracle_step": 1.0625,
+        "proposer_us_median": 16.947499999999998,
+        "proposer_us_total": 221.924
+      },
+      "binding": {
+        "steps": 14,
+        "accepted": 3,
+        "drafted": 5,
+        "tokens": 17,
+        "tokens_per_oracle_step": 1.2142857142857142,
+        "proposer_us_median": 31.171999999999997,
+        "proposer_us_total": 862.938
+      },
+      "structure_without_rewrite": {
+        "steps": 15,
+        "accepted": 2,
+        "drafted": 5,
+        "tokens": 17,
+        "tokens_per_oracle_step": 1.1333333333333333,
+        "proposer_us_median": 29.115,
+        "proposer_us_total": 797.59
+      }
+    }
+  ]
+}
